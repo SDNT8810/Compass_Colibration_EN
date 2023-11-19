@@ -11,14 +11,14 @@ matlab code for algorithm of calibration for a compass sensor
 2‏.‏1	داده‌برداری از سنسور  
 درصورتی که اندازه‌گیری به صورت صحیح انجام شده‌باشد، با ترسیم مقادیر اندازه‌گیری‌شده در دستگاه مختصات سه‌بعدی، باید حدودا تصویر یک بیضی‌گون به صورت زیر نمایش داده‌شود. مرکز این بیضی‌گون ممکن‌است منطبق بر مبدا دستگاه مختصات نباشد. همچنین اندازه‌ی سه قطر اصلی این بیضی‌گون می‌توانند با‌یکدیگر متفاوت باشند.
 
-![image](https://github.com/SDNT8810/Compass_Colibration/assets/110291520/040bfdc2-edad-4047-8cbb-3a5b4bab8b90)
+![image](https://github.com/SDNT8810/Compass_Colibration/assets/110291520/83ccbb68-e7d4-489d-8e74-96562d495066)
 
 شكل ‏2‏.‏‌1  داده خام سنسور مغناطیسی
 
 2‏.‏2	داده ایده‌ال
 در صورت استفاده از سنسور آرمانی، و همچنین در صورت دوران سنسور به صورت آرمانی به گونه‌ای که تمام جهت‌های ممکن را پوشش دهد، داده نمونه‌برداری شده به صورت یک کره به مرکز مبدا مختصات و با شعاعی برابر با اندازه میدان مغناطیسی محل کالیبراسیون، به صورت زیر اندازه‌گیری می‌گردد. 
 
- ![image](https://github.com/SDNT8810/Compass_Colibration/assets/110291520/8be14ec1-269d-440e-b695-6eb28a93b1ef)
+![image](https://github.com/SDNT8810/Compass_Colibration/assets/110291520/48cce03b-5800-405c-b101-cead61a6ca0f)
 
 شكل ‏2‏.‏‌2  داده‌های فرضی از یه سنسور آرمانی
 
@@ -30,7 +30,7 @@ Calibrated_Data = (Sensor_Data – b) × A × R_Ideal / R_Sensor
 که در این رابطه b بردار انتقال بیضی‌گون به مبدا مختصات و A ماتریس تبدیل بیضی‌گون به کره آرمانی است. R_Sensor از تابع magcal بدست می‌آید و R_Ideal برابر با اندازه میدان مغناطیسی است که با استفاده از تابع wrdmg محاسبه شده.
 مراحل فوق برای داده‌های شكل ‏2‏.‏‌2 طی شده و نتیجه به صورت زیر است.
 
- ![image](https://github.com/SDNT8810/Compass_Colibration/assets/110291520/96a0a6a6-9da9-44df-9d44-8bc755a92bf8)
+![image](https://github.com/SDNT8810/Compass_Colibration/assets/110291520/b0c9de7c-d1cb-44ad-804f-ac6027c6cb17)
 
 شكل ‏2‏.‏‌3  داده‌های کالیبره‌نشده، کلیبره‌شده و سنسور آرمانی
 
@@ -40,7 +40,7 @@ Calibrated_Data = (Sensor_Data – b) × A × R_Ideal / R_Sensor
 3‏.‏1	بررسی شرط پوشش سطح
 برای بررسی این موضوع، می‌توان از هیستوگرام دوبعدی بر روی سطح کره‌ی نگاشته‌شده استفاده کرد. ابتدا داده‌های اندازه‌گیری‌شده با سنسور را از فضای کارتزین به دستگاه مختصات کروی تبدیل می‌کنیم. این کار با استفاده از تابع cart2sph در برنامه Matlab انجام می‌شود. با استفاده از تابع histcount2 با ورودی‌های azimuth و elevation داده‌های بیان‌شده در دستگاه کروی، به‌صورتی‌که در تصویر زیر مشاهده‌می‌شود، تعداد داده‌های اندازه‌گیری‌شده در بخش‌های مختلف سطح کره مشخص می‌شود. لازم است که درصد قابل توجهی از خانه‌های هیستوگرام دارای داده باشند.
 
- ![image](https://github.com/SDNT8810/Compass_Colibration/assets/110291520/4cc4e6a9-1233-43a2-ad60-1ee62e2f6a5f)
+![image](https://github.com/SDNT8810/Compass_Colibration/assets/110291520/7dfe9cad-9ab2-42f7-961f-d01f499397f7)
 
 شكل ‏3‏.‏‌1  هیستوگرام درجه دو زوایای azimuth و elevation 
 
@@ -50,7 +50,7 @@ Calibrated_Data = (Sensor_Data – b) × A × R_Ideal / R_Sensor
 در این گزارش از تابع histcount برای بررسی توزیع نقاط در راستای شعاع استفاده‌شده‌است. 
 
 
- ![image](https://github.com/SDNT8810/Compass_Colibration/assets/110291520/9a9d86cb-1094-40cf-80fd-af9c3a675dde)
+![image](https://github.com/SDNT8810/Compass_Colibration/assets/110291520/26f890bc-54f1-4b56-b073-bfbfb5707563)
 
 شكل ‏3‏.‏‌2  هیستوگرام داده‌ها در راستای شعاع 
   

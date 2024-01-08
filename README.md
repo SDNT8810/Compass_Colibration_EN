@@ -1,75 +1,49 @@
-# Compass_Colibration
-matlab code for algorithm of calibration for a compass sensor 
+Compass Calibration
 
-توضیحات :
+Matlab code for a compass sensor calibration algorithm.
 
+Introduction
 
-1	‌مقدمه
----
+Magnetic field measurement sensors typically have three degrees of freedom in measurement. In other words, they measure the magnetic field in three orthogonal directions (Cartesian coordinate system). The square of the measured values with these sensors, in an ideal scenario, equals the Earth’s magnetic field at the sensor’s location. However, real-world measurements may deviate from this ideal scenario, and calibration is needed to account for these discrepancies.
 
-سنسورهای اندازه‌گیری میدان مغناطیسی، عموما دارای سه درجه آزادی در اندازه‌گیری هستند. به عبارتی، اندازه میدان مغناطیسی را در سه راستای عمود برهم (دستگاه مختصات کارتزین) اندازه‌گیری و گزارش می‌کنند. مجذور مربعات مقادیر اندازه‌گیری شده با این سنسورها در حالت آرمانی، برابر با اندازه میدان مغناطیسی زمین در موقعیت سنسور است. به این معنی که در صورت دوران سنسور در جهت‌های مختلف، تمام مقادیر اندازه‌گیری شده در سه محور، در بازه‌ی یکسانی حول مبدا مختصات خواهند بود.
-اما در واقعیت ممکن است داده‌های اندازه‌گیری شده، ویژگی عنوان شده را نداشته‌باشند. برای مثال ممکن است داده‌های اندازه‌گیری شده در سه راستا به صورت متقارن و همگن نباشند. همچنین ممکن است مرکز دستگاه مختصات و مرکز داده‌های اندازه‌گیری شده بر یکدیگر منطبق نبوده و به اصطلاح داده‌ها بایاس داشته باشند. 
-در این گزارش سعی می‌شود فرایندی برای کالیبره کردن سنسورهای میدان مغناطیسی معرفی شود.   
-2	داده‌برداری و پالایش داده‌ها
-برای انجام کالیبراسیون سنسور، ابتدا باید تعداد مناسبی داده‌برداری انجام شود. به صورتی که فضای کاری سنسور تا حد قابل قبولی پوشش داده شود. برای این منظور، به هنگام داده‌برداری، سنسور را در زوایای مختلف دوران می‌دهیم. به گونه‌ای که برای مثال، محور x سنسور در راستای تمام جهت‌های فضای سه‌بعدی قرار گرفته‌باشد. سپس پیش‌پردازش‌های مورد نیاز بر روی داده‌ها انجام می‌شود و ماتریس تبدیل به گونه‌ای محاسبه می‌شود که داده‌های اندازه‌گیری شده بر کره‌ای به مرکز مبدا مختصات و با شعاعی برابر با اندازه میدان مغناطیسی محل کالیبراسیون منطبق شود. در ادامه به بررسی هریک از مراحل می‌پردازیم.
+This report introduces a process for calibrating magnetic field sensors.
 
-2‏.‏1	داده‌برداری از سنسور  
----
+Data Collection and Data Refinement
 
-درصورتی که اندازه‌گیری به صورت صحیح انجام شده‌باشد، با ترسیم مقادیر اندازه‌گیری‌شده در دستگاه مختصات سه‌بعدی، باید حدودا تصویر یک بیضی‌گون به صورت زیر نمایش داده‌شود. مرکز این بیضی‌گون ممکن‌است منطبق بر مبدا دستگاه مختصات نباشد. همچنین اندازه‌ی سه قطر اصلی این بیضی‌گون می‌توانند با‌یکدیگر متفاوت باشند.
+To calibrate the sensor, an adequate amount of data collection is necessary, covering the sensor’s workspace sufficiently. During data collection, the sensor is rotated at various angles, ensuring it covers all three-dimensional directions. Subsequent preprocessing is applied to the data, and a transformation matrix is computed. This matrix aligns the measured data onto a spherical surface with a radius equal to the magnetic field strength at the calibration location.
 
-![image](https://github.com/SDNT8810/Compass_Colibration/assets/110291520/83ccbb68-e7d4-489d-8e74-96562d495066)
+Raw Sensor Data
 
-شكل ‏2‏.‏‌1  داده خام سنسور مغناطیسی
+If measurements are correctly performed, plotting the measured values in the three-dimensional coordinate system should depict an ellipsoid approximately. The center of this ellipsoid might not align with the coordinate system origin, and the three principal diameters of this ellipsoid can differ.
 
-2‏.‏2	داده ایده‌ال
----
+Figure 2.1 Raw magnetic sensor data
 
-در صورت استفاده از سنسور آرمانی، و همچنین در صورت دوران سنسور به صورت آرمانی به گونه‌ای که تمام جهت‌های ممکن را پوشش دهد، داده نمونه‌برداری شده به صورت یک کره به مرکز مبدا مختصات و با شعاعی برابر با اندازه میدان مغناطیسی محل کالیبراسیون، به صورت زیر اندازه‌گیری می‌گردد. 
+Idealized Data
 
-![image](https://github.com/SDNT8810/Compass_Colibration/assets/110291520/48cce03b-5800-405c-b101-cead61a6ca0f)
+When using an ideal sensor and rotating it arbitrarily to cover all possible directions, the sampled data represents a sphere centered at the coordinate system origin with a radius equal to the magnetic field strength at the calibration location.
 
-شكل ‏2‏.‏‌2  داده‌های فرضی از یه سنسور آرمانی
+Figure 2.2 Idealized data from an ideal sensor
 
-لازم به ذکر است که اندازه میدان مغناطیسی زمین در هر موقعیت جغرافیایی و همچنین در زمان‌های مختلف، متفاوت است. برای بدست‌آوردن اندازه میدان مغناطیسی، می‌توان از سایت‌های مختلفی استفاده کرد. اما در این گزارش با استفاده از تابع wrldmagm نرم‌افزار Matlab به صورت زیر، اندازه میدان برحسب میلی تسلا محاسبه شده‌است.
-[XYZ, H, D, I, F] = wrldmagm(hight, Lat, Lon, decyear(2022,11,21),'2020');
+Computation of Transformation Matrix
 
-2‏.‏3	محاسبه ماتریس تبدیل
----
+To calculate the appropriate transformation matrix aligning sensor data with ideal sensor data, the ‘magcal’ function in Matlab is employed. This function maps the measured data with the sensor to a sphere around the coordinate origin. The radius of this sphere might not match the magnetic field strength. Therefore, by multiplying the Earth’s magnetic field strength, calculated using the ‘wrdmg’ function, with the obtained sphere from the ‘magcal’ function and dividing it by the radius of the sphere from ‘magcal,’ the measured data is mapped onto the ideal sensor sphere.
 
-برای محاسبه ماتریس انتقال مناسب به گونه‌ای که داده‌های سنسور را بر داده‌های سنسور آرمانی نگاشت کند، از تابع magcal متلب استفاده می‌کنیم. این تابع داده‌های اندازه‌گیری شده با سنسور را به یک کره‌ی حول مبدا مختصات، تصویر می‌کند. شعاع این کره ممکن است با اندازه میدان مغناطیسی برابر نباشد. لذا با ضرب اندازه میدان مغناطیسی زمین که با استفاده از تابع wrldmg محاسبه شده‌بود در کره‌ی بدست‌آمده از تابع magcal، و تقسیم آن بر شعاع کره‌ی بدست آمده از تابع magcal، داده‌های اندازه‌گیری‌شده با سنسور، بر کره‌ی سنسور آرمانی نگاشت می‌شود. نگاشت به صورت زیر انجام می‌شود.
-Calibrated_Data = (Sensor_Data – b) × A × R_Ideal / R_Sensor
-که در این رابطه b بردار انتقال بیضی‌گون به مبدا مختصات و A ماتریس تبدیل بیضی‌گون به کره آرمانی است. R_Sensor از تابع magcal بدست می‌آید و R_Ideal برابر با اندازه میدان مغناطیسی است که با استفاده از تابع wrdmg محاسبه شده.
-مراحل فوق برای داده‌های شكل ‏2‏.‏‌2 طی شده و نتیجه به صورت زیر است.
+These steps are applied to the data shown in Figure 2.2, resulting in the following:
 
-![image](https://github.com/SDNT8810/Compass_Colibration/assets/110291520/b0c9de7c-d1cb-44ad-804f-ac6027c6cb17)
+Figure 2.3 Uncalibrated, calibrated, and ideal sensor data
 
-شكل ‏2‏.‏‌3  داده‌های کالیبره‌نشده، کلیبره‌شده و سنسور آرمانی
+Data Accuracy Assessment
 
- 
-3	بررسی صحت داده‌ها 
----
+To ensure the accuracy of the measurement process and data refinement, several conditions need to be verified.
 
-برای حصول اطمینان از صحت فرایند اندازه‌گیری و پالایش داده‌ها، بررسی چند شرط لازم است. یکی از این شروط، پوشش کل فضای کاری سنسور برروی سطح کره یا بیضی‌گون است. به عبارتی باید سنسور در تمامی جهت‌ها دوران داده‌شود که داده‌های اندازه‌گیری‌شده، سطح کره یا بیضی‌گون را به صورت کامل جارو کرده‌باشد. درغیراین‌صورت، ممکن‌است بیضی‌گونی که بر داده‌های اندازه‌گیری محاط می‌شود، با واقعیت هم‌خوانی نداشته‌باشد. شرط مهم دیگر، از ثابت‌بودن اندازه میدان مغناطیسی زمین در مکان و زمان مشخص، برداشت می‌شود. به عبارتی به دلیل ثابت بودن میدان مغناطیسی زمین در موقعیت مکانی و زمانی خاص، با دوران سنسور آرمانی نباید اندازه میدان که به وسیله سنسور اندازه‌گیری می‌شود تغییر کند. به بیان دیگر، در حالت آرمانی همه‌ی نقاط اندازه‌گیری شده باید برروی سطح یک کره با شعاعی مشخص قرار گیرند. خروج نقاط اندازه‌گیری‌شده از سطح کره، نشان‌دهنده‌ی اختلالات مغناطیسی اطراف سنسور است. در ادامه به روش بررسی برآورده‌شدن هریک از این شروط می‌پردازیم.
+Coverage of the Surface
 
-3‏.‏1	بررسی شرط پوشش سطح
----
+Histogram analysis on the mapped spherical surface is used to ensure coverage. The histogram, shown in Figure 3.1, indicates the distribution of measured data points on the mapped sphere.
 
-برای بررسی این موضوع، می‌توان از هیستوگرام دوبعدی بر روی سطح کره‌ی نگاشته‌شده استفاده کرد. ابتدا داده‌های اندازه‌گیری‌شده با سنسور را از فضای کارتزین به دستگاه مختصات کروی تبدیل می‌کنیم. این کار با استفاده از تابع cart2sph در برنامه Matlab انجام می‌شود. با استفاده از تابع histcount2 با ورودی‌های azimuth و elevation داده‌های بیان‌شده در دستگاه کروی، به‌صورتی‌که در تصویر زیر مشاهده‌می‌شود، تعداد داده‌های اندازه‌گیری‌شده در بخش‌های مختلف سطح کره مشخص می‌شود. لازم است که درصد قابل توجهی از خانه‌های هیستوگرام دارای داده باشند.
+Figure 3.1 Azimuth and elevation angles histogram
 
-![image](https://github.com/SDNT8810/Compass_Colibration/assets/110291520/7dfe9cad-9ab2-42f7-961f-d01f499397f7)
+Co-Radial Condition
 
-شكل ‏3‏.‏‌1  هیستوگرام درجه دو زوایای azimuth و elevation 
+All measured points on an ideal sensor should be on the surface of a sphere with a radius equal to the Earth’s magnetic field strength at the measurement location. To assess this, the distribution of points in the radial direction is examined, as shown in Figure 3.2.
 
-3‏.‏2	بررسی شرط هم‌شعاعی
----
-
-همان‌طور که پیش‌تر عنوان‌شد، همه‌ی نقاط اندازه‌گیری‌شده در یک سنسور آرمانی، بر روی سطح یک کره با شعاعی برابر با اندازه‌ی میدان مغناطیسی زمین در مکان و زمان اجرای اندازه‌گیری قرار می‌گیرند. انتظار می‌رود ابر نقاط اندازه‌گیری‌شده با سنسور، بعد از اجرای فرایند کالیبراسیون، برروی سطح همین کره‌ی مرجع قرار بگیرد. دلیل این انتظار، فرض ثابت بودن اندازه‌ی میدان مغناطیسی طی فرایند اندازه‌گیری است. برای بررسی این موضوع، فاصله نقاط با مبدا مختصات مورد توجه قرار می‌گیرد.
-طبیعتا همه‌ی نقاط به صورت کامل برروی سطح کره قرار ندارند. این امر می‌تواند بر اثر عدم تعامد محورهای سنسور، وجود نویز در داده‌ها یا اختلالات مغناطیسی محیط نظیر نزدیکی اجسام تاثیرگذار بر میدان مغناطیسی در مجاورت سنسور باشد. در صورتی که توزیع نقاط اندازه‌گیری‌شده در راستای شعاع در دستگاه مختصات کروی، حول مقدار شعاع کره‌ی مرجع متراکم و در شعاع‌های دیگر بسیار کمتر توزیع شده‌باشد، داده‌برداری قابل اعتماد بوده و شرط هم‌شعاعی برآورده می‌شود. 
-در این گزارش از تابع histcount برای بررسی توزیع نقاط در راستای شعاع استفاده‌شده‌است. 
-
-
-![image](https://github.com/SDNT8810/Compass_Colibration/assets/110291520/26f890bc-54f1-4b56-b073-bfbfb5707563)
-
-شكل ‏3‏.‏‌2  هیستوگرام داده‌ها در راستای شعاع 
-  
+Figure 3.2 Radial direction histogram
